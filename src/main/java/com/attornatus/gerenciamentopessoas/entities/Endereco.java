@@ -67,4 +67,12 @@ public class Endereco {
     public void setPrincipal(Boolean principal) {
         this.principal = principal;
     }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
+    }
 }
