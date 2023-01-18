@@ -12,7 +12,7 @@ public class Endereco {
     private String cep;
     private String numero;
     private String cidade;
-    private Boolean principal;
+    private Boolean principal = false;
 
     @ManyToOne
     @JoinColumn(name="endereco_id")

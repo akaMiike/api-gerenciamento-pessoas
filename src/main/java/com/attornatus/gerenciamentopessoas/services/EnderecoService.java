@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EnderecoService {
@@ -32,19 +33,23 @@ public class EnderecoService {
     }
 
     public Endereco buscarEnderecoPrincipalPessoaPorId(Integer idPessoa){
-        return enderecoRepository.buscarEnderecoPrincipalPorPessoa(idPessoa).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço principal não encontrado")
+        if(!pessoaService.existePessoa(idPessoa)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada");
+        }
+        return enderecoRepository.buscarEnderecoPrincipalPorPessoa(idPessoa)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço principal não encontrado")
         );
     }
 
     public void salvarEnderecoPrincipalPessoa(Integer idEndereco, Integer idPessoa){
-        Endereco enderecoPrincipalAntigo = buscarEnderecoPrincipalPessoaPorId(idPessoa);
+        if(!pessoaService.existePessoa(idPessoa)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada");
+        }
+
+        enderecoRepository.removerEnderecoPrincipalAtualPessoa(idPessoa);
+
         Endereco enderecoPrincipalAtual = buscarPorId(idEndereco);
-
-        enderecoPrincipalAntigo.setPrincipal(false);
         enderecoPrincipalAtual.setPrincipal(true);
-
-        enderecoRepository.save(enderecoPrincipalAntigo);
         enderecoRepository.save(enderecoPrincipalAtual);
     }
 

@@ -20,7 +20,7 @@ public class PessoaService {
     }
 
     public void atualizar(Pessoa pessoaAtualizada, Integer id){
-        if(!pessoaRepository.existsById(id)){
+        if(!existePessoa(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada.");
         }
 
@@ -38,4 +38,7 @@ public class PessoaService {
         return pessoaRepository.findAll();
     }
 
+    public boolean existePessoa(Integer idPessoa){
+        return pessoaRepository.existsById(idPessoa);
+    }
 }
