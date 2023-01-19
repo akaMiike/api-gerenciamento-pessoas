@@ -2,12 +2,12 @@ package com.attornatus.gerenciamentopessoas.services;
 
 import com.attornatus.gerenciamentopessoas.entities.Endereco;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
+import com.attornatus.gerenciamentopessoas.exceptions.endereco.EnderecoNaoEncontradoException;
+import com.attornatus.gerenciamentopessoas.exceptions.pessoa.PessoaNaoEncontradaException;
 import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,17 +34,17 @@ public class EnderecoService {
 
     public Endereco buscarEnderecoPrincipalPessoaPorId(Integer idPessoa){
         if(!pessoaService.existePessoa(idPessoa)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada");
+            throw new PessoaNaoEncontradaException();
         }
         return enderecoRepository.buscarEnderecoPrincipalPorPessoa(idPessoa)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço principal não encontrado")
+                .orElseThrow(() -> new EnderecoNaoEncontradoException("Endereço principal não encontrado.")
         );
     }
 
     @Transactional
     public void salvarEnderecoPrincipalPessoa(Integer idEndereco, Integer idPessoa){
         if(!pessoaService.existePessoa(idPessoa)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada");
+            throw new PessoaNaoEncontradaException();
         }
 
         enderecoRepository.removerEnderecoPrincipalAtualPessoa(idPessoa);
@@ -56,7 +56,7 @@ public class EnderecoService {
 
     public Endereco buscarPorId(Integer id){
         return enderecoRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereço não encontrado")
+                () -> new EnderecoNaoEncontradoException()
         );
     }
     
