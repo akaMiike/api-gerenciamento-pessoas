@@ -36,7 +36,7 @@ public class EnderecoServiceTests {
 
         pessoa.setId(1);
         pessoa.setNome("Michael");
-        pessoa.setDataNascimento(LocalDate.of(2022,9,28));
+        pessoa.setDataNascimento("28/09/2001");
 
         Endereco endereco = new Endereco();
         endereco.setCep("12345-190");

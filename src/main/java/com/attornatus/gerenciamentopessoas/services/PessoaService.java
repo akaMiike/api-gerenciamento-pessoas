@@ -20,6 +20,10 @@ public class PessoaService {
     }
 
     public void atualizar(Pessoa pessoaAtualizada, Integer id){
+        if(pessoaAtualizada.getNome() == null && pessoaAtualizada.getDataNascimento() == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Dados atualizados devem conter ao menos um campo não vazio.");
+        }
+
         if(!existePessoa(id)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada.");
         }

@@ -32,7 +32,7 @@ public class PessoaServiceTests {
         Pessoa novaPessoa = new Pessoa();
 
         novaPessoa.setNome("Michael");
-        novaPessoa.setDataNascimento(LocalDate.of(2001,9,28));
+        novaPessoa.setDataNascimento("28/09/2001");
 
         pessoaService.criar(novaPessoa);
         verify(pessoaRepository,times(1)).save(novaPessoa);
@@ -44,7 +44,7 @@ public class PessoaServiceTests {
         Pessoa pessoa = new Pessoa();
 
         pessoa.setNome("Michael");
-        pessoa.setDataNascimento(LocalDate.of(2001,9,28));
+        pessoa.setDataNascimento("28/09/2001");
 
         when(pessoaRepository.existsById(anyInt())).thenReturn(true);
 
@@ -58,7 +58,7 @@ public class PessoaServiceTests {
         Pessoa pessoa = new Pessoa();
 
         pessoa.setNome("Michael");
-        pessoa.setDataNascimento(LocalDate.of(2001,9,28));
+        pessoa.setDataNascimento("28/09/2001");
 
         when(pessoaRepository.existsById(anyInt())).thenReturn(false);
         Assertions.assertThrows(ResponseStatusException.class,
@@ -73,7 +73,7 @@ public class PessoaServiceTests {
 
         pessoa.setId(1);
         pessoa.setNome("Michael");
-        pessoa.setDataNascimento(LocalDate.of(2001,9,28));
+        pessoa.setDataNascimento("28/09/2001");
 
         when(pessoaRepository.findById(anyInt())).thenReturn(Optional.of(pessoa));
 

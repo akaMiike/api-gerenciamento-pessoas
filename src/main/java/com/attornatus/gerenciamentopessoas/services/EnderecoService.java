@@ -3,13 +3,13 @@ package com.attornatus.gerenciamentopessoas.services;
 import com.attornatus.gerenciamentopessoas.entities.Endereco;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
 import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EnderecoService {
@@ -41,6 +41,7 @@ public class EnderecoService {
         );
     }
 
+    @Transactional
     public void salvarEnderecoPrincipalPessoa(Integer idEndereco, Integer idPessoa){
         if(!pessoaService.existePessoa(idPessoa)){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pessoa não encontrada");
