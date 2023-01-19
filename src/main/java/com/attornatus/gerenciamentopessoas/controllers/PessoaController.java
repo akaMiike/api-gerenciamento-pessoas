@@ -4,6 +4,7 @@ import com.attornatus.gerenciamentopessoas.dto.endereco.EnderecoCreateDTO;
 import com.attornatus.gerenciamentopessoas.dto.endereco.EnderecoReturnDTO;
 import com.attornatus.gerenciamentopessoas.dto.pessoa.PessoaCreateDTO;
 import com.attornatus.gerenciamentopessoas.dto.pessoa.PessoaReturnDTO;
+import com.attornatus.gerenciamentopessoas.dto.pessoa.PessoaUpdateDTO;
 import com.attornatus.gerenciamentopessoas.entities.Endereco;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
 import com.attornatus.gerenciamentopessoas.services.EnderecoService;
@@ -56,7 +57,7 @@ public class PessoaController {
     }
 
     @PutMapping("/{idPessoa}")
-    public ResponseEntity<Void> atualizarDadosPessoa(@RequestBody PessoaCreateDTO pessoa,
+    public ResponseEntity<Void> atualizarDadosPessoa(@RequestBody @Valid PessoaUpdateDTO pessoa,
                                                        @PathVariable("idPessoa") Integer idPessoa){
 
         pessoaService.atualizar(mapper.map(pessoa, Pessoa.class), idPessoa);
