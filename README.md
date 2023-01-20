@@ -24,6 +24,7 @@ Para executar os testes, execute:
 # Funcionalidades
 
 Assim como descrito nos requisitos, a API possui as seguintes funcionalidades:
+
 <b>Criar uma pessoa</b>
 
 Para registrar um novo usuário, é necessário enviar o nome e data de nascimento (formato dia/mes/ano) via POST para `/pessoas`.
