@@ -1,6 +1,6 @@
 # Gerenciamento de Pessoas
 
-Uma API de gerenciamento de pessoas, feita para o desafio técnico do processo seletivo da Attornatus.
+Uma API de gerenciamento de pessoas, feita para o desafio técnico do processo seletivo da Attornatus. As respostas para as perguntas sobre qualidade de um software encontra-se no arquivo [respostas-qualidade-software.txt](https://github.com/akaMiike/api-gerenciamento-pessoas/blob/main/respostas-qualidade-software.txt)
 
 # Tecnologias Usadas
 
