@@ -2,6 +2,8 @@ package com.attornatus.gerenciamentopessoas.services;
 
 import com.attornatus.gerenciamentopessoas.entities.Endereco;
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
+import com.attornatus.gerenciamentopessoas.exceptions.endereco.EnderecoNaoEncontradoException;
+import com.attornatus.gerenciamentopessoas.exceptions.pessoa.PessoaNaoEncontradaException;
 import com.attornatus.gerenciamentopessoas.repositories.EnderecoRepository;
 import com.attornatus.gerenciamentopessoas.repositories.PessoaRepository;
 import org.junit.jupiter.api.Assertions;
@@ -10,9 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,7 +62,7 @@ public class EnderecoServiceTests {
 
         when(pessoaRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(PessoaNaoEncontradaException.class,
                 () -> enderecoService.salvar(endereco, 99)
         );
     }
@@ -100,7 +100,7 @@ public class EnderecoServiceTests {
 
        when(pessoaRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-       Assertions.assertThrows(ResponseStatusException.class,
+       Assertions.assertThrows(PessoaNaoEncontradaException.class,
                () -> enderecoService.buscarEnderecosPessoaPorId(99)
        );
     }
@@ -139,7 +139,7 @@ public class EnderecoServiceTests {
 
         when(pessoaRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(PessoaNaoEncontradaException.class,
                 () -> enderecoService.buscarEnderecoPrincipalPessoaPorId(anyInt()));
     }
 
@@ -147,9 +147,10 @@ public class EnderecoServiceTests {
     @DisplayName("QUANDO buscar por endereço principal não existente de uma pessoa inexistente DEVE retornar exceção")
     public void buscarEnderecoPrincipalInexistenteComPessoaExistente(){
 
+        when(pessoaRepository.existsById(anyInt())).thenReturn(true);
         when(enderecoRepository.buscarEnderecoPrincipalPorPessoa(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EnderecoNaoEncontradoException.class,
                 () -> enderecoService.buscarEnderecoPrincipalPessoaPorId(anyInt()));
     }
 
@@ -213,7 +214,7 @@ public class EnderecoServiceTests {
         when(enderecoRepository.findById(anyInt())).thenReturn(Optional.of(endereco));
         when(enderecoRepository.buscarEnderecoPrincipalPorPessoa(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(PessoaNaoEncontradaException.class,
                 () -> enderecoService.salvarEnderecoPrincipalPessoa(endereco.getId(), anyInt())
         );
     }
@@ -228,7 +229,7 @@ public class EnderecoServiceTests {
         when(enderecoRepository.findById(anyInt())).thenReturn(Optional.empty());
         when(enderecoRepository.buscarEnderecoPrincipalPorPessoa(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(PessoaNaoEncontradaException.class,
                 () -> enderecoService.salvarEnderecoPrincipalPessoa(anyInt(), pessoa.getId())
         );
     }
@@ -263,7 +264,7 @@ public class EnderecoServiceTests {
     public void buscarEnderecoInexistentePorId(){
         when(enderecoRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ResponseStatusException.class,
+        Assertions.assertThrows(EnderecoNaoEncontradoException.class,
                 () -> enderecoService.buscarPorId(anyInt())
         );
     }

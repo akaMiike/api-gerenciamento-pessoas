@@ -1,6 +1,7 @@
 package com.attornatus.gerenciamentopessoas.services;
 
 import com.attornatus.gerenciamentopessoas.entities.Pessoa;
+import com.attornatus.gerenciamentopessoas.exceptions.pessoa.PessoaNaoEncontradaException;
 import com.attornatus.gerenciamentopessoas.repositories.PessoaRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -42,11 +43,12 @@ public class PessoaServiceTests {
     @DisplayName("QUANDO atualizar uma pessoa com id válido DEVE atualizar os dados da pessoa")
     public void atualizarPessoaComIdValido(){
         Pessoa pessoa = new Pessoa();
-
+        pessoa.setId(1);
         pessoa.setNome("Michael");
         pessoa.setDataNascimento("28/09/2001");
 
         when(pessoaRepository.existsById(anyInt())).thenReturn(true);
+        when(pessoaRepository.findById(anyInt())).thenReturn(Optional.of(pessoa));
 
         pessoaService.atualizar(pessoa, 1);
         verify(pessoaRepository,times(1)).save(pessoa);
@@ -61,8 +63,8 @@ public class PessoaServiceTests {
         pessoa.setDataNascimento("28/09/2001");
 
         when(pessoaRepository.existsById(anyInt())).thenReturn(false);
-        Assertions.assertThrows(ResponseStatusException.class,
-                () -> pessoaService.atualizar(pessoa, 99)
+        Assertions.assertThrows(PessoaNaoEncontradaException.class,
+                () -> pessoaService.atualizar(pessoa, anyInt())
         );
     }
 
