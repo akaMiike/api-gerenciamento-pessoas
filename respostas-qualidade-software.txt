@@ -1,0 +1,5 @@
+1 - Durante a implementação, a qualidade é avaliada desde a maneira como é escrita o código, levando em conta boas práticas, a legibilidade e a manutenibilidade do código escrito. Também é necessário avaliar se aquilo que foi escrito resolve o problema proposto. Além disso, os testes unitários também são essenciais para garantir que o código funciona como planejado.
+
+2 - Durante todas as etapas, desde o planejamento inicial do projeto, até mesmo após o fim dele, em que o projeto precisa ser mantido e atualizado. Pois a qualidade de um software não está ligada somente a escrita do código e sim ao ciclo de vida do projeto como um todo. E entre todas essas etapas, é possível analisar a qualidade do mesmo.
+
+
