@@ -61,7 +61,7 @@ public class PessoaController {
                                                        @PathVariable("idPessoa") Integer idPessoa){
 
         pessoaService.atualizar(mapper.map(pessoa, Pessoa.class), idPessoa);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping
@@ -82,7 +82,7 @@ public class PessoaController {
                                                                @PathVariable("idEndereco") Integer idEndereco){
 
         enderecoService.salvarEnderecoPrincipalPessoa(idEndereco, idPessoa);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
 
